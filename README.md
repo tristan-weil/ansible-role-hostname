@@ -2,41 +2,64 @@
 
 An Ansible Role to update the hostname.
 
+[![Actions Status](https://github.com/tristan-weil/ansible-role-hostname/workflows/molecule/badge.svg?branch=master)](https://github.com/tristan-weil/ansible-role-hostname/actions)
+
 ## Role Variables
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+Available variables are listed below, (see also `defaults/main.yml`).
 
-    hostname_name: [mandatory]                        # the hostname
+Mandatory variables:
 
-## Dependencies
+| Variable      | Description |
+| :------------ | :---------- |
+| hostname_fqdn |  the `hostname` to set |
 
-None.
+Optional variables:
+
+| Variable      | Default | Description |
+| :------------ | :------ | :---------- |
+| hostname_etc_hosts | <...> | a list of <etc_hosts entry> to add to/remove from /etc/hosts |
+
+### *<etc_hosts entry>*
+
+An *etc_hosts entry* allow to add or remove entries from the /etc/hosts file.
+
+**NOTE**: you should use [ansible-role-etc_hosts](https://github.com/tristan-weil/ansible-role-etc_hosts/) for an
+easier way to handle entries in the /etc/hosts file.
+This option is only meant for simple use-case and cleaning and you probably should not use it.
+
+Mandatory variables:
+
+| Variable      | Description |
+| :------------ | :---------- |
+
+Optional variables:
+
+| Variable      | Default | Description |
+| :------------ | :------ | :---------- |
+| line | | the exact line to add / remove / replace |
+| regexp | | the regexp allowing to find an entry to remove / replace |
+| state | present | *present / absent*: the state of the entry |
 
 ## Example Playbook
 
-    - hosts: webservers
+    - hosts: 'webservers'
       roles:
-        - role: t18s.fr_hostname
-          hostname_name: xxxx
+        - role: 'ansible-role-hostname'
+          hostname_fqdn: xxxx
 
 ## Todo
 
 None.
 
+## Dependencies
+
+None.
+
+## Supported platforms
+
+See [meta/main.yml](https://github.com/tristan-weil/ansible-role-hostname/blob/master/meta/main.yml)
+
 ## License
 
-```
-Copyright (c) 2019 Tristan Weil <titou@lab.t18s.fr>
-
-Permission to use, copy, modify, and distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-```
+See [LICENSE.md](https://github.com/tristan-weil/ansible-role-hostname/blob/master/LICENSE.md)

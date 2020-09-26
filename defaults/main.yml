@@ -1,3 +1,13 @@
 ---
 
-# hostname_name:
+# hostname_fqdn: host.domain.tld
+
+hostname_etc_hosts:
+  - line: "127.0.0.1 {{ hostname_fqdn.split('.')[0] }} {{ hostname_fqdn }}"
+    state: 'present'
+
+  # ovh fix
+  - regexp: '127.0.1.1\s+{{ ansible_facts.hostname }}\s+{{ ansible_facts.hostname }}'
+    state: 'absent'
+  - regexp: '127.0.1.1\s+debian.example.com'
+    state: 'absent'

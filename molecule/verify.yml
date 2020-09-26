@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  name: 'Verify'
+  become: True
+  gather_facts: True
+
+  tasks:
+    - name: 'Check hostname'
+      assert:
+        that:
+          - "ansible_facts['nodename'] == 'molecule.domain.local'"

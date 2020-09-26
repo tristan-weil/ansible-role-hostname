@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  name: 'Converge'
+  become: True
+
+  tasks:
+    - import_role:
+        name: 'ansible-role-hostname'
+      vars:
+        hostname_fqdn: 'molecule.domain.local'

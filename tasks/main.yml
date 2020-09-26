@@ -1,5 +1,13 @@
 ---
 
-- name: update hostname
+- name: 'update hostname'
   hostname:
-    name: "{{ hostname_name }}"
+    name: "{{ hostname_fqdn }}"
+
+- name: 'fix /etc/hosts'
+  lineinfile:
+    path: '/etc/hosts'
+    regexp: "{{ item.regexp | default(omit) }}"
+    line: "{{ item.line | default(omit) }}"
+    state: "{{ item.state }}"
+  loop: "{{ hostname_etc_hosts }}"
